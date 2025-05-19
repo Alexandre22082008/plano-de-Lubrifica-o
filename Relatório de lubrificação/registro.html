@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro</title>
+  <style>
+    body { background: white; color: red; font-family: Arial; padding: 20px; }
+    textarea, button { width: 100%; margin-top: 10px; padding: 10px; }
+    .comentarios { margin-top: 30px; }
+    .comentario { border-top: 1px solid red; padding: 10px 0; }
+  </style>
+</head>
+<body>
+  <h2>Ficha Técnica</h2>
+  <div id="info"></div>
+
+  <textarea id="descricao" placeholder="Descreva como foi a lubrificação e o estado da máquina..."></textarea>
+  <button onclick="enviar()">Enviar</button>
+
+  <div class="comentarios" id="comentarios"></div>
+
+  <script>
+    const torno = JSON.parse(localStorage.getItem('tornoSelecionado'));
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    const info = `
+      Escola SENAI "Nami Jafet"<br>
+      Lubrificação<br>
+      Ficha de Máquina / Equipamento<br>
+      Setor: Mecânica 1<br>
+      ${torno.nome} - N.I ${torno.ni}<br><br>
+      Cabeçote: HR 32 EP (5,5L)<br>
+      Caixa Norton: HR 150 EP<br>
+      Avental: HR 150 EP (½L)<br>
+      Mancal do Fuso, Cabeçote Móvel, Carrinho Transversal e Superior: GMA EP2 / HR 150 EP<br>
+      Período: 1200h, 400h, 2400h<br>
+      Lubrificação Diária
+    `;
+    document.getElementById('info').innerHTML = info;
+
+    function enviar() {
+      const desc = document.getElementById('descricao').value;
+      if (!desc) return alert("Digite a descrição.");
+      const registros = JSON.parse(localStorage.getItem('registros')) || [];
+      registros.push({ usuario, torno, descricao: desc, data: new Date().toLocaleString() });
+      localStorage.setItem('registros', JSON.stringify(registros));
+      window.location.href = 'agradecimento.html';
+    }
+
+    function mostrarComentarios() {
+      const registros = JSON.parse(localStorage.getItem('registros')) || [];
+      const comentarios = registros
+        .filter(r => r.torno.ni === torno.ni)
+        .map(r => `<div class="comentario"><b>${r.usuario.nome} (${r.usuario.turma})</b><br>${r.descricao}<br><small>${r.data}</small></div>`);
+      document.getElementById('comentarios').innerHTML = comentarios.join('');
+    }
+
+    mostrarComentarios();
+  </script>
+</body>
+</html>

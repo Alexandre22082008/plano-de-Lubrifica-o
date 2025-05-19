@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Registros Passados</title>
+  <style>
+    body { background: white; color: red; font-family: Arial; text-align: center; padding: 20px; }
+    .registro { border-bottom: 1px solid red; padding: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>Registros Passados</h1>
+  <div id="registros"></div>
+  <button onclick="window.location.href='index.html'">Voltar para o Início</button>
+
+  <script>
+    const registros = JSON.parse(localStorage.getItem('registros')) || [];
+    const container = document.getElementById('registros');
+    registros.forEach(r => {
+      const div = document.createElement('div');
+      div.className = 'registro';
+      div.innerHTML = `<b>${r.usuario.nome} (${r.usuario.turma})</b><br>${r.descricao}<br><small>${r.data}</small>`;
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>

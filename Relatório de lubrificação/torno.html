@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Tornos</title>
+  <style>
+    body { background: white; color: red; font-family: Arial; text-align: center; }
+    .torno {
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid red;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Tornos</h2>
+  <div id="lista"></div>
+  <script>
+    const tornos = [
+      { nome: "Torno 1", ni: "891665" },
+      { nome: "Torno 2", ni: "891682" },
+      { nome: "Torno 3", ni: "891667" },
+      { nome: "Torno 4", ni: "891664" },
+      { nome: "Torno 5", ni: "942838" },
+      { nome: "Torno 6", ni: "942839" },
+      { nome: "Torno 7", ni: "942844" },
+      { nome: "Torno 8", ni: "891663" },
+      { nome: "Torno 9", ni: "891663" },
+      { nome: "Torno 10", ni: "942840" },
+      { nome: "Torno 11", ni: "942841" },
+      { nome: "Torno 12", ni: "942845" },
+      { nome: "Torno 13", ni: "891666" },
+      { nome: "Torno 14", ni: "891660" },
+      { nome: "Torno 15", ni: "942842" },
+      { nome: "Torno 16", ni: "942843" },
+    ];
+
+    const container = document.getElementById('lista');
+    tornos.forEach((t, i) => {
+      const div = document.createElement('div');
+      div.className = 'torno';
+      div.innerText = `${t.nome} N.I ${t.ni}`;
+      div.onclick = () => {
+        localStorage.setItem('tornoSelecionado', JSON.stringify(t));
+        window.location.href = 'registro.html';
+      };
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>
